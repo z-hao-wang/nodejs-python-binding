@@ -47,6 +47,12 @@ PythonCode::PythonCode(const Napi::CallbackInfo& info)
     Napi::TypeError::New(env, "path expected").ThrowAsJavaScriptException();
     return;
   }
+  Py_UnbufferedStdioFlag = 1; // force line_buffering for _all_ I/O
+  // https://stackoverflow.com/questions/49784583/numpy-import-fails-on-multiarray-extension-library-when-called-from-embedded-pyt
+  void *handle = dlopen("libpython3.7m.so", RTLD_LAZY | RTLD_GLOBAL);
+  if (!handle) {
+    std::cout << "dlopen libpython3.7m failed!\n";
+  }
   Py_Initialize();
   if (!Py_IsInitialized())
   {

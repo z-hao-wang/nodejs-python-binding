@@ -29,8 +29,6 @@ RUN chmod 0700 /root/.ssh
 RUN ssh-keyscan github.com >/root/.ssh/known_hosts
 RUN ssh-keyscan bitbucket.org >/root/.ssh/known_hosts
 
-
-
 WORKDIR /app
 
 COPY package.json /app/
